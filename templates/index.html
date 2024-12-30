@@ -1,0 +1,335 @@
+<html><head><!--<base href="https://example.com">--><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>mem.fm - Створи свій музичний момент</title><style>
+  :root {
+    --primary: #FF3366;
+    --secondary: #6C63FF;
+    --dark: #2A2A2A;
+    --light: #FFFFFF;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: var(--dark);
+    color: var(--light);
+    overscroll-behavior: none;
+  }
+
+  .container {
+    max-width: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    padding: 0.8rem;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+    color: var(--light);
+    opacity: 0.8;
+    text-align: center;
+  }
+
+  .video-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 65px 0 90px;
+  }
+
+  .video-card {
+      width: min(450px, 100%);
+      height: calc(100vh - 155px);
+      max-height: 90vh;
+      aspect-ratio: 9/16;
+      background: #333;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      margin: 0 auto;
+    }
+
+    .video-card video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+  .video-actions {
+    position: absolute;
+    right: 0.8rem;
+    bottom: 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .action-button {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+
+  .action-button:active {
+    transform: scale(0.95);
+  }
+
+  .upload-section {
+    position: fixed;
+    bottom: 70px;
+    left: 0;
+    width: 100%;
+    padding: 0.8rem;
+    text-align: center;
+    z-index: 90;
+  }
+
+  .upload-button {
+    padding: 0.8rem 1.6rem;
+    background: var(--primary);
+    border: none;
+    border-radius: 24px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .upload-button:active {
+    transform: scale(0.98);
+  }
+
+  .navigation {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-around;
+    z-index: 100;
+  }
+
+  .nav-item {
+    color: var(--light);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    padding: 0.3rem;
+  }
+
+  .nav-item i {
+    font-size: 1.4rem;
+  }
+
+  .nav-item.active {
+    color: var(--primary);
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+
+  .pulse {
+    animation: pulse 2s infinite;
+  }
+
+  @media (min-width: 768px) {
+    .video-card {
+      width: 450px;
+      height: 800px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .logo {
+      font-size: 1.2rem;
+    }
+    
+    .tagline {
+      font-size: 0.85rem;
+    }
+
+    .video-card {
+      border-radius: 12px;
+    }
+
+    .action-button {
+      width: 40px;
+      height: 40px;
+    }
+
+    .nav-item {
+      font-size: 0.7rem;
+    }
+
+    .nav-item i {
+      font-size: 1.3rem;
+    }
+  }
+
+  @supports (padding: max(0px)) {
+    .navigation, .upload-section {
+      padding-bottom: max(0.8rem, env(safe-area-inset-bottom));
+    }
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <!--<a href="https://example.com" class="logo">mem.fm</a>-->
+      <div class="tagline">Музичні кліпи з Вашою участю</div>
+    </header>
+
+    <main class="video-container">
+      <div class="video-card">
+        <video class="video-content" autoplay loop muted>
+          <source src="{{ video_url }}" type="video/mp4">
+          Ваш браузер не підтримує відео.
+        </video>
+        <div class="video-actions">
+          <button class="action-button">
+            <i class="ph-heart-bold"></i>
+          </button>
+          <button class="action-button">
+            <i class="ph-chat-circle-bold"></i>
+          </button>
+          <button class="action-button">
+            <i class="ph-share-network-bold"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <div class="upload-section">
+      <button class="upload-button pulse">
+        <i class="ph-camera-bold"></i>
+        Додайте ваше фото
+      </button>
+    </div>
+
+    <form id="uploadForm" method="post" action="/videosettings" enctype="multipart/form-data">
+
+      <input type="url" name="target_url" id="target_url" value="{{ video_url }}">
+      
+      <input type="file" id="swap_file" name="swap_file" accept="image/jpeg, image/png" required>
+        
+    </form>
+
+    <nav class="navigation">
+      <a href="https://example.com/home" class="nav-item active">
+        <i class="ph-house-bold"></i>
+        <span>Головна</span>
+      </a>
+      <a href="https://example.com/search" class="nav-item">
+        <i class="ph-magnifying-glass-bold"></i>
+        <span>Пошук</span>
+      </a>
+      <a href="https://example.com/create" class="nav-item">
+        <i class="ph-plus-circle-bold"></i>
+        <span>Створити</span>
+      </a>
+      <a href="https://example.com/profile" class="nav-item">
+        <i class="ph-user-bold"></i>
+        <span>Профіль</span>
+      </a>
+    </nav>
+  </div>
+
+   <script>
+    const appHeight = () => {
+      const doc = document.documentElement;
+      doc.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+    };
+    window.addEventListener('resize', appHeight);
+    appHeight();
+
+    function handlePhotoUpload() {
+        const fileInput = document.querySelector('#swap_file'); // Use the existing input
+        fileInput.click(); // Trigger file selection
+
+        fileInput.onchange = function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                console.log('Фото завантажено:', file.name);
+                alert(file.name);
+
+                // Automatically submit the form after file selection
+                const form = document.querySelector('#uploadForm');
+                form.submit();
+            }
+        };
+    }
+
+
+    document.querySelector('.upload-button').addEventListener('click', handlePhotoUpload);
+
+
+    const actionButtons = document.querySelectorAll('.action-button');
+    actionButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        this.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+          this.style.transform = 'scale(1)';
+        }, 100);
+      }, { passive: true });
+    });
+  </script>
+</body></html>
