@@ -12,7 +12,7 @@ RESULT_URL = "https://api.magicapi.dev/api/v1/capix/faceswap/result/"
 
 @app.route('/')
 def upload_form():
-    return render_template('index.html', video_url="https://s1.ezgif.com/tmp/ezgif-1-f99bd52147.mp4")
+    return render_template('index.html', video_url="https://media-hosting.imagekit.io//0d1a1416ea9e457b/0-02-05-1f0bb584df3c66ee37a849940b3105d42825e93da35d60e9453ec2a4a5e7c986_94a5588153408d12.mp4?Expires=1735828164&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=dBixUl2Lvkm4l3ZpGwJB-wLAJ72mC8OrImjf66q179vxX~g3YafSmdJS17b~qIKKtplEEkAJ1rvM0pSRoe9QJ2gFn8bpaN9OiZJO5cjgkvkAX2lqL~jsfbvKWUxVSPv9sr15fxOrnLuhI8zexS9RNALGcF-n3uMvkWP8Sj3z7G4nl0MkKb2lkqOJpTWM7xTlL0z0Cg2nxmHObhlRR6gs4w3DsrgfMWjpOlg8ABnMFu3~0CDq8aBFH9oCo1UDl8b59nsCVrlasbUPpNydFLY8QAyfGmaiji1eucfNqc1htv3DeXFoJmn3EmDXFT1JNzEWSTbqhYvhE-WNAJpinAEZsQ__")
 
 @app.route('/videosettings', methods=['POST'])
 def choose_character():
