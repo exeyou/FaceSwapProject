@@ -5,7 +5,7 @@ import os
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads/'
-API_KEY = "cm15ia7rv0008mn03pg2jdro6"
+API_KEY = "cm13mpgl20007mh03348pu3wy"
 UPLOAD_URL = "https://api.magicapi.dev/api/v1/capix/faceswap/faceswap/v1/video"
 FILE_UPLOAD_URL = "https://api.magicapi.dev/api/v1/capix/faceswap/upload/"
 RESULT_URL = "https://api.magicapi.dev/api/v1/capix/faceswap/result/"
@@ -76,7 +76,7 @@ def check_result(request_id):
         'accept': 'application/json'
     }
 
-    time.sleep(5)  # Consider using a more robust approach for waiting, like polling
+    time.sleep(7)  # Consider using a more robust approach for waiting, like polling
 
     response = requests.post(RESULT_URL, data=payload, headers=headers)
 
@@ -97,7 +97,7 @@ def check_result(request_id):
             print("The task is still in progress. Please wait and try again.")
             return 'The task is still in progress. Please wait and try again.'
         else:
-            print(f"Unexpected status: {status}")
+            print(f"Unexpected status: {result_response}")
             return f'Unexpected status: {status}'
     else:
         return f'Failed! Status Code: {response.status_code}, Response: {response.text}'
@@ -130,3 +130,4 @@ def upload_file_to_url(file):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
