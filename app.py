@@ -99,7 +99,7 @@ def check_result(request_id):
                 time.sleep(poll_interval)  # Wait before the next attempt
             else:
                 print(f"Unexpected status: {result_response}")
-                return f'Unexpected status: {status}'
+                return f'Unexpected status: {result_response}'
         else:
             print(f"Failed API call with status code: {response.status_code}")
             time.sleep(poll_interval)  # Wait before the next attempt
@@ -136,3 +136,4 @@ def upload_file_to_url(file):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
