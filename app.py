@@ -76,31 +76,37 @@ def check_result(request_id):
         'accept': 'application/json'
     }
 
-    time.sleep(7)  # Consider using a more robust approach for waiting, like polling
+    max_attempts = 10  # Maximum number of polling attempts
+    poll_interval = 2  # Time (in seconds) between each polling attempt
 
-    response = requests.post(RESULT_URL, data=payload, headers=headers)
+    for attempt in range(max_attempts):
+        response = requests.post(RESULT_URL, data=payload, headers=headers)
+        print(f"Attempt {attempt + 1}: Result API response: {response.status_code}, {response.text}")
 
-    print(f"Result API response: {response.status_code}, {response.text}")
-
-    if response.status_code == 200:
-        result_response = response.json()
-        status = result_response.get('image_process_response', {}).get('status')
-        if status == "OK":
-            result_url = result_response.get('image_process_response', {}).get('result_url')
-            if result_url:
-                print(f"Result URL received: {result_url}")
-                return render_template('index.html', video_url=result_url)
+        if response.status_code == 200:
+            result_response = response.json()
+            status = result_response.get('image_process_response', {}).get('status')
+            if status == "OK":
+                result_url = result_response.get('image_process_response', {}).get('result_url')
+                if result_url:
+                    print(f"Result URL received: {result_url}")
+                    return render_template('index.html', video_url=result_url)
+                else:
+                    print("Failed to get result_url from the API response.")
+                    return 'Failed to get result_url from the API response.'
+            elif status == "InProgress":
+                print("The task is still in progress. Retrying...")
+                time.sleep(poll_interval)  # Wait before the next attempt
             else:
-                print("Failed to get result_url from the API response.")
-                return 'Failed to get result_url from the API response.'
-        elif status == "InProgress":
-            print("The task is still in progress. Please wait and try again.")
-            return 'The task is still in progress. Please wait and try again.'
+                print(f"Unexpected status: {result_response}")
+                return f'Unexpected status: {status}'
         else:
-            print(f"Unexpected status: {result_response}")
-            return f'Unexpected status: {status}'
-    else:
-        return f'Failed! Status Code: {response.status_code}, Response: {response.text}'
+            print(f"Failed API call with status code: {response.status_code}")
+            time.sleep(poll_interval)  # Wait before the next attempt
+
+    print("Maximum polling attempts reached. Task may still be in progress.")
+    return 'The task is still in progress. Please wait and try again later.'
+
 
 def upload_file_to_url(file):
     files = {'file1': (file.filename, file, file.content_type)}
@@ -130,4 +136,3 @@ def upload_file_to_url(file):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
