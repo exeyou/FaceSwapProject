@@ -12,7 +12,7 @@ RESULT_URL = "https://api.magicapi.dev/api/v1/capix/faceswap/result/"
 
 @app.route('/')
 def upload_form():
-    return render_template('index.html', video_url="https://cdn.pixabay.com/video/2025/01/01/249977.mp4")
+    return render_template('index.html', video_url="https://cdn.pixabay.com/video/2025/01/07/251427.mp4")
 
 @app.route('/videosettings', methods=['POST'])
 def choose_character():
